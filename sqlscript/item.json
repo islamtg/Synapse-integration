@@ -1,0 +1,20 @@
+{
+	"name": "item",
+	"properties": {
+		"folder": {
+			"name": "View_scripts"
+		},
+		"content": {
+			"query": "CREATE VIEW item\nAS\nSELECT \nISNULL(CAST(_col0_ AS int), -1) AS  i_item_sk   ,\nISNULL(CAST(_col1_ AS char(16)), -1) AS i_item_id   ,\nISNULL(CAST(_col2_ AS date ),'') AS  i_rec_start_date    ,\nISNULL(CAST(_col3_ AS date ),'') AS  i_rec_end_date ,\nISNULL(CAST(_col4_ AS  varchar(200) ), 'Unknown') AS  i_item_desc   ,\nISNULL(CAST(_col5_ AS  decimal(7,2) ), -1) AS i_current_price  ,\nISNULL(CAST(_col6_ AS   decimal(7,2) ), -1) AS    i_wholesale_cost,\nISNULL(CAST(_col7_ AS  int), -1) AS i_brand_id    ,\nISNULL(CAST(_col8_ AS  char(50)    ), 'Unknown') AS    i_brand     ,\nISNULL(CAST(_col9_ AS int), -1) AS  i_class_id  ,\nISNULL(CAST(_col10_ AS  char(50)   ), 'Unknown') AS i_class  ,\nISNULL(CAST(_col11_ AS int), -1) AS     i_category_id   ,\nISNULL(CAST(_col12_ AS  char(50)   ), 'Unknown') AS  i_category    ,\nISNULL(CAST(_col13_ AS int), -1) AS  i_manufact_id    ,\nISNULL(CAST(_col14_ AS  char(50)    ), 'Unknown') AS  i_manufact   ,\nISNULL(CAST(_col15_ AS char(50)), 'Unknown') AS    i_size ,\nISNULL(CAST(_col16_ AS char(50)), 'Unknown') AS  i_formulation  ,\nISNULL(CAST(_col17_ AS char(50)), 'Unknown') AS i_color     ,\nISNULL(CAST(_col18_ AS char(50)), 'Unknown') AS      i_units         ,\nISNULL(CAST(_col19_ AS char(50) ), 'Unknown') AS     i_container       ,\nISNULL(CAST(_col20_ AS  int), -1) AS  i_manager_id         ,\nISNULL(CAST(_col21_ AS char(50)), 'Unknown') AS   i_product_name  \nFROM OPENROWSET\n(\n    BULK 'item',\n    DATA_SOURCE = 'insiderrsc',\n    FORMAT = 'delta'\n) --as rows;\nWITH\n(\n[mycols] nvarchar(255),\n\t[_col0_] nvarchar(255),\n\t[_col1_] nvarchar(255),\n\t[_col2_] nvarchar(255),\n\t[_col3_] nvarchar(255),\n\t[_col4_] nvarchar(255),\n\t[_col5_] nvarchar(255),\n\t[_col6_] nvarchar(255),\n\t[_col7_] nvarchar(255),\n\t[_col8_] nvarchar(255),\n\t[_col9_] nvarchar(255),\n\t[_col10_] nvarchar(255),\n\t[_col11_] nvarchar(255),\n\t[_col12_] nvarchar(255),\n\t[_col13_] nvarchar(255),\n\t[_col14_] nvarchar(255),\n\t[_col15_] nvarchar(255),\n\t[_col16_] nvarchar(255),\n\t[_col17_] nvarchar(255),\n\t[_col18_] nvarchar(255),\n\t[_col19_] nvarchar(255),\n\t[_col20_] nvarchar(255),\n\t[_col21_] nvarchar(255),\n\t[_col22_] nvarchar(255),\n\t[filename] nvarchar(255)\n) AS rows;\ngo\nSELECT TOP 10000 * FROM item;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "insider",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

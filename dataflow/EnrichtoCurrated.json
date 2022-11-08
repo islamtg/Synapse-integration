@@ -1,0 +1,66 @@
+{
+	"name": "EnrichtoCurrated",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "ie-synapse-insider-WorkspaceDefaultStorage",
+						"type": "LinkedServiceReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "ie-synapse-insider-WorkspaceDefaultStorage",
+						"type": "LinkedServiceReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     container as string (toString('Enriched-data')),",
+				"     foldername as string (toString('customer')),",
+				"     targetcontainer as string (toString('curated-data')),",
+				"     Lastmodified as string (toString(toDate(\"02/07/2022 00:00:00\",\"mm/dd/yyyy\")))",
+				"}",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     rowUrlColumn: 'filename',",
+				"     modifiedAfter: (toTimestamp($Lastmodified)),",
+				"     format: 'parquet',",
+				"     fileSystem: ($container),",
+				"     folderPath: ($foldername)) ~> source1",
+				"source1 derive(filename = concat(replace(filename, '.dat', ''), '_', toString(currentDate()), '.parquet')) ~> DerivedColumn1",
+				"DerivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'delta',",
+				"     fileSystem: ($targetcontainer),",
+				"     folderPath: ($foldername),",
+				"     mergeSchema: true,",
+				"     autoCompact: false,",
+				"     optimizedWrite: false,",
+				"     vacuum: 0,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

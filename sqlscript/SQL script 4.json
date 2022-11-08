@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 4",
+	"properties": {
+		"content": {
+			"query": "CREATE USER [iselghaz-synapse-spn] FROM EXTERNAL PROVIDER;\n\n--Make sure your user has the permissions to CREATE tables in the [dbo] schema\nGRANT CREATE TABLE TO [iselghaz-synapse-spn];\nGRANT ALTER ON SCHEMA::[df] TO [iselghaz-synapse-spn];\n\n--Make sure your user has ADMINISTER DATABASE BULK OPERATIONS permissions\nGRANT ADMINISTER DATABASE BULK OPERATIONS TO [iselghaz-synapse-spn];\n\n--Make sure your user has INSERT permissions on the target table\nGRANT INSERT ON call_center_demo TO [iselghaz-synapse-spn]\n\nEXEC sp_addrolemember 'db_exporter', [iselghaz-synapse-spn];",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sqld",
+				"poolName": "sqld"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

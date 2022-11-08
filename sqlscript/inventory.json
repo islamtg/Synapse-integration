@@ -1,0 +1,20 @@
+{
+	"name": "inventory",
+	"properties": {
+		"folder": {
+			"name": "View_scripts"
+		},
+		"content": {
+			"query": "CREATE VIEW inventory\nAS\nSELECT \nISNULL(CAST(_col0_ AS int), -1) AS inv_date_sk     ,\nISNULL(CAST(_col1_ AS int), -1) AS inv_item_sk     ,\nISNULL(CAST(_col2_ AS int), -1) AS      inv_warehouse_sk    ,\nISNULL(CAST(_col3_ AS int), -1) AS     inv_quantity_on_hand \nFROM OPENROWSET\n(\n    BULK 'inventory',\n    DATA_SOURCE = 'insiderrsc',\n    FORMAT = 'delta'\n) --as rows;\nWITH\n(\n[mycols] nvarchar(255),\n\t[_col0_] nvarchar(255),\n\t[_col1_] nvarchar(255),\n\t[_col2_] nvarchar(255),\n\t[_col3_] nvarchar(255),\n\t[_col4_] nvarchar(255),\n\t[filename] nvarchar(255)\n) AS rows;\ngo\nSELECT TOP 10000 * FROM inventory;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "insider",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

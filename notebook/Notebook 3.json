@@ -1,0 +1,69 @@
+{
+	"name": "Notebook 3",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "spark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "d30e3f61-aa15-443d-a45c-a4b1c908ba98"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "scala"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/3c84e5c6-c8ce-4f99-b67c-b39db1a54086/resourceGroups/iselghaz-insider-synapse/providers/Microsoft.Synapse/workspaces/ie-synapse-insider/bigDataPools/spark",
+				"name": "spark",
+				"type": "Spark",
+				"endpoint": "https://ie-synapse-insider.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/spark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 10,
+				"cores": 16,
+				"memory": 112,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"df.write.\r\n",
+					"  option(Constants.SERVER, \"ie-synapse-insider.sql.azuresynapse.net\"). //required; can be fetched from Portal – Azure synapse workspace Overview pane - Dedicated SQL endpoint config.\r\n",
+					"  option(Constants.TEMP_FOLDER, \"abfss://enriched-data@ieinsider.dfs.core.windows.net/call_center/call_center_1_24_2022-02-03.parquet\"). //Defaults to workspace attached primary storage.\r\n",
+					"  mode(SaveMode.Overwrite). //Defaults to ErrorIfExists SaveMode option.\r\n",
+					"  synapsesql(\"sqld.df.call_center_demo\", Constants.INTERNAL, None, Option(callBackHandle))"
+				],
+				"execution_count": 3
+			}
+		]
+	}
+}

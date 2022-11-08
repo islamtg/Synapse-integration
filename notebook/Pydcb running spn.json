@@ -1,0 +1,169 @@
+{
+	"name": "Pydcb running spn",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "spark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "112g",
+			"driverCores": 16,
+			"executorMemory": "112g",
+			"executorCores": 16,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "3575eaa9-30cb-460a-95b1-b347c5a27ce9"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1",
+				"state": {
+					"01538313-9be1-4ba4-80b6-84f15b86cf40": {
+						"type": "Synapse.DataFrame",
+						"sync_state": {
+							"table": {
+								"rows": [
+									{
+										"0": "1"
+									}
+								],
+								"schema": [
+									{
+										"key": "0",
+										"name": "col1",
+										"type": "bigint"
+									}
+								],
+								"truncated": false
+							},
+							"isSummary": false,
+							"language": "scala"
+						},
+						"persist_state": {
+							"view": {
+								"type": "details",
+								"chartOptions": {
+									"chartType": "bar",
+									"aggregationType": "sum",
+									"categoryFieldKeys": [],
+									"seriesFieldKeys": [
+										"0"
+									],
+									"isStacked": false
+								}
+							}
+						}
+					}
+				}
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/3c84e5c6-c8ce-4f99-b67c-b39db1a54086/resourceGroups/iselghaz-insider-synapse/providers/Microsoft.Synapse/workspaces/ie-synapse-insider/bigDataPools/spark",
+				"name": "spark",
+				"type": "Spark",
+				"endpoint": "https://ie-synapse-insider.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/spark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 10,
+				"cores": 16,
+				"memory": 112
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"import msal\r\n",
+					"import struct\r\n",
+					"import pyodbc\r\n",
+					"import pandas as pd"
+				],
+				"execution_count": 12
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"def getToken(authUrl, tenantId, scope, clientId, clientSecret):\r\n",
+					"\r\n",
+					"    authority_url = authUrl + tenantId\r\n",
+					"    context = msal.ConfidentialClientApplication(client_id=clientId, client_credential=clientSecret, authority=authority_url)\r\n",
+					"\r\n",
+					"    token = context.acquire_token_silent(\r\n",
+					"        scopes=[scope] \r\n",
+					"        ,account=None\r\n",
+					"    )\r\n",
+					"\r\n",
+					"    if not token:\r\n",
+					"        token = context.acquire_token_for_client(\r\n",
+					"            scopes=[scope] \r\n",
+					"        )\r\n",
+					"\r\n",
+					"    return token\r\n",
+					"\r\n",
+					"if __name__ == '__main__':\r\n",
+					"    # Tenant ID for your Azure Subscription\r\n",
+					"    TENANT_ID = '72f988bf-86f1-41af-91ab-2d7cd011db47'\r\n",
+					"    # Your Service Principal App ID\r\n",
+					"    CLIENT = '51e74d19-a92f-48cd-bc47-55dae310c18f'\r\n",
+					"    # Your Service Principal secret\r\n",
+					"    KEY = 'M2V8Q~_6VKOWZQrZNPne5oxWANNU1FBYB.3wwaFL'\r\n",
+					"\r\n",
+					"    headers = getToken(authUrl='https://login.microsoftonline.com/', tenantId=TENANT_ID, scope='https://sql.azuresynapse.net/.default', clientId=CLIENT, clientSecret=KEY)\r\n",
+					"    \r\n",
+					"    tokenb = str.encode(headers['access_token'])\r\n",
+					"\r\n",
+					"    exptoken = b\"\"\r\n",
+					"    for i in tokenb:\r\n",
+					"        exptoken += bytes({i})\r\n",
+					"        exptoken += bytes(1)\r\n",
+					"    tokenstruct = struct.pack(\"=i\", len(exptoken)) + exptoken;\r\n",
+					"\r\n",
+					"    server = 'ie-synapse-insider.sql.azuresynapse.net'\r\n",
+					"    database = 'sqld'\r\n",
+					"    driver = '{ODBC Driver 17 for SQL Server}'\r\n",
+					"\r\n",
+					"    connstr = f'DRIVER={driver};SERVER={server};DATABASE={database};'\r\n",
+					"\r\n",
+					"    with pyodbc.connect(connstr, attrs_before = { 1256:tokenstruct }) as conn:\r\n",
+					"        with conn.cursor() as cursor:\r\n",
+					"            sql = 'SELECT TOP 10 * FROM df.test'\r\n",
+					"            data = pd.read_sql(sql,conn)\r\n",
+					"            display(data)"
+				],
+				"execution_count": 13
+			}
+		]
+	}
+}

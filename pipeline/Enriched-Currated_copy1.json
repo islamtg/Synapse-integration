@@ -1,0 +1,144 @@
+{
+	"name": "Enriched-Currated_copy1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://api.inaturalist.org/v1/observations?taxon_id=52134&page=1&per_page=80&order=dsc&order_by=id",
+					"connectVia": {
+						"referenceName": "AutoResolveIntegrationRuntime",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Until1",
+				"type": "Until",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals('',variables('varresults'))",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "RawToEnriched",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "1.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataflow": {
+									"referenceName": "EnrichtoCurrated_copy1",
+									"type": "DataFlowReference",
+									"parameters": {
+										"lastid": "last(body.results.id)"
+									}
+								},
+								"integrationRuntime": {
+									"referenceName": "IntegrationRuntime1",
+									"type": "IntegrationRuntimeReference"
+								},
+								"traceLevel": "None",
+								"runConcurrently": true,
+								"cacheSinks": {
+									"firstRowOnly": true
+								}
+							}
+						},
+						{
+							"name": "Set variable2",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "RawToEnriched",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "varresults",
+								"value": {
+									"value": "@activity('RawToEnriched').output.lastid",
+									"type": "Expression"
+								}
+							}
+						}
+					],
+					"timeout": "0.12:00:00"
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Web1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "varresults",
+					"value": {
+						"value": "@activity('Web1').output.results",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"containername": {
+				"type": "String",
+				"defaultValue": "enriched-data"
+			},
+			"foldername": {
+				"type": "String",
+				"defaultValue": "*"
+			},
+			"targetcontainer": {
+				"type": "String",
+				"defaultValue": "curated-data"
+			},
+			"lastmodified": {
+				"type": "String"
+			},
+			"varresults": {
+				"type": "Array"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-10-03T23:11:12Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

@@ -1,0 +1,20 @@
+{
+	"name": "EnrichedParquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ie-synapse-insider-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "enriched-data"
+			},
+			"compressionCodec": "none"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

@@ -1,0 +1,138 @@
+{
+	"name": "spark msal running spn",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "spark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "112g",
+			"driverCores": 16,
+			"executorMemory": "112g",
+			"executorCores": 16,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "dd08eaa0-6ca7-4e94-a122-f7f77e0b3509"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1",
+				"state": {
+					"2f9c2f12-f6b9-42cf-875e-ed049cfa5316": {
+						"type": "Synapse.DataFrame",
+						"sync_state": {
+							"table": {
+								"rows": [
+									{
+										"0": "1"
+									}
+								],
+								"schema": [
+									{
+										"key": "0",
+										"name": "col1",
+										"type": "int"
+									}
+								],
+								"truncated": false
+							},
+							"isSummary": false,
+							"language": "scala"
+						},
+						"persist_state": {
+							"view": {
+								"type": "details",
+								"chartOptions": {
+									"chartType": "bar",
+									"aggregationType": "sum",
+									"categoryFieldKeys": [],
+									"seriesFieldKeys": [
+										"0"
+									],
+									"isStacked": false
+								}
+							}
+						}
+					}
+				}
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/3c84e5c6-c8ce-4f99-b67c-b39db1a54086/resourceGroups/iselghaz-insider-synapse/providers/Microsoft.Synapse/workspaces/ie-synapse-insider/bigDataPools/spark",
+				"name": "spark",
+				"type": "Spark",
+				"endpoint": "https://ie-synapse-insider.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/spark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 10,
+				"cores": 16,
+				"memory": 112
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"import msal\r\n",
+					"clientId = '51e74d19-a92f-48cd-bc47-55dae310c18f'\r\n",
+					"clientSecret = 'M2V8Q~_6VKOWZQrZNPne5oxWANNU1FBYB.3wwaFL'\r\n",
+					"tenantId = '72f988bf-86f1-41af-91ab-2d7cd011db47'\r\n",
+					"authority = \"https://login.windows.net/\" + tenantId\r\n",
+					"scope = 'https://sql.azuresynapse.net/.default'\r\n",
+					"azure_sql_url = \"jdbc:sqlserver://ie-synapse-insider.sql.azuresynapse.net\"\r\n",
+					"database_name = \"sqld\"\r\n",
+					"query = \"select TOP 10 * FROM df.test\"\r\n",
+					"encrypt = \"true\"\r\n",
+					"# host_name_in_certificate = \"*.database.windows.net\"\r\n",
+					"authUrl = 'https://login.microsoftonline.com/'\r\n",
+					"authority_url = authUrl + tenantId\r\n",
+					"context = msal.ConfidentialClientApplication(client_id=clientId, client_credential=clientSecret, authority=authority_url)\r\n",
+					"token = context.acquire_token_silent(\r\n",
+					"    scopes=[scope] \r\n",
+					"    ,account=None\r\n",
+					")\r\n",
+					"if not token:\r\n",
+					"    print('Token not in cache')\r\n",
+					"    token = context.acquire_token_for_client(\r\n",
+					"        scopes=[scope] \r\n",
+					"    )\r\n",
+					"access_token = token[\"access_token\"]\r\n",
+					"emperorDf = spark.read \\\r\n",
+					"             .format(\"com.microsoft.sqlserver.jdbc.spark\") \\\r\n",
+					"             .option(\"url\", azure_sql_url) \\\r\n",
+					"             .option(\"query\", query) \\\r\n",
+					"             .option(\"databaseName\", database_name) \\\r\n",
+					"             .option(\"accessToken\", access_token) \\\r\n",
+					"             .option(\"encrypt\", \"true\") \\\r\n",
+					"             .option(\"hostNameInCertificate\", \"*.database.windows.net\") \\\r\n",
+					"             .load()\r\n",
+					"display(emperorDf)"
+				],
+				"execution_count": 7
+			}
+		]
+	}
+}

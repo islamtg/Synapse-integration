@@ -1,0 +1,20 @@
+{
+	"name": "date_dim",
+	"properties": {
+		"folder": {
+			"name": "View_scripts"
+		},
+		"content": {
+			"query": "CREATE VIEW date_dim\nAS\nSELECT \nISNULL(CAST(_col0_ AS int), -1) AS d_date_sk,\nISNULL(CAST(_col1_ AS char(16)), -1) AS d_date_id,\nISNULL(CAST(_col2_ AS date), '') AS  d_date,\nISNULL(CAST(_col3_ AS int), -1) AS d_month_seq,\nISNULL(CAST(_col4_ AS int), -1) AS d_week_seq,\nISNULL(CAST(_col5_ AS int), -1) AS d_quarter_seq,\nISNULL(CAST(_col6_ AS  int), -1) AS d_year,\nISNULL(CAST(_col7_ AS  int), -1) AS d_dow,\nISNULL(CAST(_col8_ AS int), -1) AS d_moy  ,\nISNULL(CAST(_col9_ AS int), -1) AS d_dom,\nISNULL(CAST(_col10_ AS int), -1) AS d_qoy,\nISNULL(CAST(_col11_ AS int), -1) AS d_fy_year,\nISNULL(CAST(_col12_ AS int), -1) AS d_fy_quarter_seq,\nISNULL(CAST(_col13_ AS int), -1) AS d_fy_week_seq,\nISNULL(CAST(_col14_ AS char(9) ), 'Unknown') AS d_day_name,\nISNULL(CAST(_col15_ AS char(6) ), 'Unknown') AS d_quarter_name,\nISNULL(CAST(_col16_ AS char(1)), '') AS d_holiday,\nISNULL(CAST(_col17_ AS char(1)), '') AS d_weekend,\nISNULL(CAST(_col18_ AS char(1)), '') AS d_following_holiday,\nISNULL(CAST(_col19_ AS int), -1) AS d_first_dom,\nISNULL(CAST(_col20_ AS  int), -1) AS d_last_dom,\nISNULL(CAST(_col21_ AS int), -1) AS d_same_day_ly,\nISNULL(CAST(_col22_ AS char(1)), '') AS d_same_day_lq,\nISNULL(CAST(_col23_ AS char(1)), '') AS d_current_day,\nISNULL(CAST(_col24_ AS char(1)), '') AS d_current_week,\nISNULL(CAST(_col25_ AS char(1)), '') AS d_current_month,\nISNULL(CAST(_col26_ AS char(1)), '') AS d_current_quarter,\nISNULL(CAST(_col27_ AS char(1)), '') AS d_current_year\nFROM OPENROWSET\n(\n    BULK 'date_dim',\n    DATA_SOURCE = 'insiderrsc',\n    FORMAT = 'delta'\n) --as rows;\nWITH\n(\n[mycols] nvarchar(255),\n\t[_col0_] nvarchar(255),\n\t[_col1_] nvarchar(255),\n\t[_col2_] nvarchar(255),\n\t[_col3_] nvarchar(255),\n\t[_col4_] nvarchar(255),\n\t[_col5_] nvarchar(255),\n\t[_col6_] nvarchar(255),\n\t[_col7_] nvarchar(255),\n\t[_col8_] nvarchar(255),\n\t[_col9_] nvarchar(255),\n\t[_col10_] nvarchar(255),\n\t[_col11_] nvarchar(255),\n\t[_col12_] nvarchar(255),\n\t[_col13_] nvarchar(255),\n\t[_col14_] nvarchar(255),\n\t[_col15_] nvarchar(255),\n\t[_col16_] nvarchar(255),\n\t[_col17_] nvarchar(255),\n\t[_col18_] nvarchar(255),\n\t[_col19_] nvarchar(255),\n\t[_col20_] nvarchar(255),\n\t[_col21_] nvarchar(255),\n\t[_col22_] nvarchar(255),\n\t[_col23_] nvarchar(255),\n\t[_col24_] nvarchar(255),\n\t[_col25_] nvarchar(255),\n\t[_col26_] nvarchar(255),\n\t[_col27_] nvarchar(255),\n\t[_col28_] nvarchar(255),\n\t[filename] nvarchar(255)\n) AS rows;\ngo\nSELECT TOP 10000 * FROM date_dim;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "insider",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

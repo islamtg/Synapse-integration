@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 6",
+	"properties": {
+		"content": {
+			"query": "SELECT TOP (100) [cc_call_center_sk]\n,[cc_call_center_id]\n,[cc_rec_start_date]\n,[cc_rec_end_date]\n,[cc_closed_date_sk]\n,[cc_open_date_sk]\n,[cc_name]\n,[cc_class]\n,[cc_employees]\n,[cc_sq_ft]\n,[cc_hours]\n,[cc_manager]\n,[cc_mkt_id]\n,[cc_mkt_class]\n,[cc_mkt_desc]\n,[cc_market_manager]\n,[cc_division]\n,[cc_division_name]\n,[cc_company]\n,[cc_company_name]\n,[cc_street_number]\n,[cc_street_name]\n,[cc_street_type]\n,[cc_suite_number]\n,[cc_city]\n,[cc_county]\n,[cc_state]\n,[cc_zip]\n,[cc_country]\n,[cc_gmt_offset]\n,[cc_tax_percentage]\n FROM [df].[call_center_demo]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sqld",
+				"poolName": "sqld"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

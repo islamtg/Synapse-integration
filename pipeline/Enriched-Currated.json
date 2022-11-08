@@ -1,0 +1,155 @@
+{
+	"name": "Enriched-Currated",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DestinationDataset_8qd",
+						"type": "DatasetReference",
+						"parameters": {
+							"containerName": {
+								"value": "@variables('containername')",
+								"type": "Expression"
+							}
+						}
+					},
+					"fieldList": [
+						"childItems",
+						"itemName",
+						"lastModified"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "RawToEnriched",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "1.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataflow": {
+									"referenceName": "EnrichtoCurrated",
+									"type": "DataFlowReference",
+									"parameters": {
+										"container": {
+											"value": "'@{variables('containername')}'",
+											"type": "Expression"
+										},
+										"foldername": {
+											"value": "'@{item().name}'",
+											"type": "Expression"
+										},
+										"targetcontainer": {
+											"value": "'@{variables('targetcontainer')}'",
+											"type": "Expression"
+										},
+										"Lastmodified": {
+											"value": "'@{variables('lastmodified')}'",
+											"type": "Expression"
+										}
+									}
+								},
+								"integrationRuntime": {
+									"referenceName": "IntegrationRuntime1",
+									"type": "IntegrationRuntimeReference"
+								},
+								"traceLevel": "None",
+								"runConcurrently": true,
+								"cacheSinks": {
+									"firstRowOnly": true
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "lastmodified",
+					"value": {
+						"value": "@activity('Get Metadata1').output.lastModified",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"containername": {
+				"type": "String",
+				"defaultValue": "enriched-data"
+			},
+			"foldername": {
+				"type": "String",
+				"defaultValue": "*"
+			},
+			"targetcontainer": {
+				"type": "String",
+				"defaultValue": "curated-data"
+			},
+			"lastmodified": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Curated-data-pipeline"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-02-08T14:37:40Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

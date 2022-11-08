@@ -1,0 +1,20 @@
+{
+	"name": "customer",
+	"properties": {
+		"folder": {
+			"name": "View_scripts"
+		},
+		"content": {
+			"query": "CREATE VIEW customer\nAS\nSELECT \nISNULL(CAST(_col0_ AS int), -1) AS c_customer_sk,\nISNULL(CAST(_col1_ AS varchar(50)), -1) AS c_customer_id,\nISNULL(CAST(_col2_ AS int), -1) AS  c_current_cdemo_sk,\nISNULL(CAST(_col3_ AS int), -1) AS c_current_hdemo_sk,\nISNULL(CAST(_col4_ AS int), -1) AS c_current_addr_sk,\nISNULL(CAST(_col5_ AS int), -1) AS c_first_shipto_date_sk,\nISNULL(CAST(_col6_ AS int), -1) AS c_first_sales_date_sk,\nISNULL(CAST(_col7_ AS varchar(50) ), 'Unknown') AS c_salutation,\nISNULL(CAST(_col8_ AS varchar(50) ), 'Unknown') AS c_first_name,\nISNULL(CAST(_col9_ AS varchar(50) ), 'Unknown') AS c_last_name,\nISNULL(CAST(_col10_ AS char(2)), 'NA') AS c_preferred_cust_flag,\nISNULL(CAST(_col11_ AS int), -1) AS c_birth_day,\nISNULL(CAST(_col12_ AS int), -1) AS c_birth_month,\nISNULL(CAST(_col13_ AS int), -1) AS  c_birth_year,\nISNULL(CAST(_col14_ AS varchar(50) ), 'Unknown') AS c_login,\nISNULL(CAST(_col15_ AS varchar(50) ), 'Unknown') AS c_email_address,\nISNULL(CAST(_col16_ AS varchar(50) ), 'Unknown') AS   c_last_review_date \nFROM OPENROWSET\n(\n    BULK 'customer',\n    DATA_SOURCE = 'insiderrsc',\n    FORMAT = 'delta'\n) --as rows;\nWITH\n(\n[mycols] nvarchar(255),\n\t[_col0_] nvarchar(255),\n\t[_col1_] nvarchar(255),\n\t[_col2_] nvarchar(255),\n\t[_col3_] nvarchar(255),\n\t[_col4_] nvarchar(255),\n\t[_col5_] nvarchar(255),\n\t[_col6_] nvarchar(255),\n\t[_col7_] nvarchar(255),\n\t[_col8_] nvarchar(255),\n\t[_col9_] nvarchar(255),\n\t[_col10_] nvarchar(255),\n\t[_col11_] nvarchar(255),\n\t[_col12_] nvarchar(255),\n\t[_col13_] nvarchar(255),\n\t[_col14_] nvarchar(255),\n\t[_col15_] nvarchar(255),\n\t[_col16_] nvarchar(255),\n\t[_col17_] nvarchar(255),\n\t[_col18_] nvarchar(255),\n\t[filename] nvarchar(255)\n) AS rows;\ngo\nSELECT TOP 10000 * FROM customer;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "insider",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

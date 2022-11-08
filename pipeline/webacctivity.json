@@ -1,0 +1,342 @@
+{
+	"name": "webacctivity",
+	"properties": {
+		"activities": [
+			{
+				"name": "checking file",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "Ujval_Test_Dynamic",
+						"type": "DatasetReference",
+						"parameters": {
+							"storagecontainer": "raw-data",
+							"filepathname": "ujval_test",
+							"datasetname": "USAddressesGeocoding.csv"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "checking file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('checking file').output.value",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"batchCount": 1,
+					"activities": [
+						{
+							"name": "Web1",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": {
+									"value": "https://api.opencagedata.com/geocode/v1/json?q=@{item().Prop_8}&key=168eed44267e41699330ee02d3465219",
+									"type": "Expression"
+								},
+								"connectVia": {
+									"referenceName": "AutoResolveIntegrationRuntime",
+									"type": "IntegrationRuntimeReference"
+								},
+								"method": "GET"
+							}
+						},
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Web1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "lat",
+								"value": {
+									"value": "@concat(activity('Web1').output.results[0].geometry.lat)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable1_copy1",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Web1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "long",
+								"value": {
+									"value": "@concat(activity('Web1').output.results[0].geometry.lng)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable1_copy1_copy1",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Web1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "flag",
+								"value": {
+									"value": "@concat(activity('Web1').output.results[0].annotations.flag)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable1_copy1_copy1_copy1",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Web1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "confidence",
+								"value": {
+									"value": "@concat(activity('Web1').output.results[0].confidence)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Web1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "raw-data/ujval_test/USAddressesGeocoding.csv"
+								},
+								{
+									"name": "Destination",
+									"value": "raw-data/ujval_test/output.csv"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"additionalColumns": [
+										{
+											"name": "lat",
+											"value": {
+												"value": "@concat(activity('Web1').output.results[0].geometry.lat)",
+												"type": "Expression"
+											}
+										},
+										{
+											"name": "lng",
+											"value": {
+												"value": "@concat(activity('Web1').output.results[0].geometry.lng)",
+												"type": "Expression"
+											}
+										},
+										{
+											"name": "flag",
+											"value": {
+												"value": "@concat(activity('Web1').output.results[0].annotations.flag)",
+												"type": "Expression"
+											}
+										},
+										{
+											"name": "confidence",
+											"value": {
+												"value": "@concat(activity('Web1').output.results[0].confidence)",
+												"type": "Expression"
+											}
+										}
+									],
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".csv"
+									}
+								},
+								"enableStaging": false,
+								"parallelCopies": 1,
+								"validateDataConsistency": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "lat",
+												"type": "String"
+											},
+											"sink": {
+												"name": "lat",
+												"type": "String",
+												"physicalType": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "lng",
+												"type": "String"
+											},
+											"sink": {
+												"name": "lng",
+												"type": "String",
+												"physicalType": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "flag",
+												"type": "String"
+											},
+											"sink": {
+												"name": "flag",
+												"type": "String",
+												"physicalType": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "confidence",
+												"type": "String"
+											},
+											"sink": {
+												"name": "confidence",
+												"type": "String",
+												"physicalType": "String"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "Ujval_Test_DelimitedText1",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Ujval_Test_DelimitedText2",
+									"type": "DatasetReference"
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"lat": {
+				"type": "String"
+			},
+			"long": {
+				"type": "String"
+			},
+			"flag": {
+				"type": "String"
+			},
+			"confidence": {
+				"type": "String"
+			},
+			"arrays": {
+				"type": "Array"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-08-11T23:51:57Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

@@ -1,0 +1,20 @@
+{
+	"name": "customer_address",
+	"properties": {
+		"folder": {
+			"name": "View_scripts"
+		},
+		"content": {
+			"query": "CREATE VIEW customer_address\nAS\nSELECT \nISNULL(CAST(_col0_ AS int), -1) AS ca_address_sk  ,\nISNULL(CAST(_col1_ AS char(16)), -1) AS  ca_address_id ,\nISNULL(CAST(_col2_ AS char(16)), -1) AS  ca_street_number  ,\nISNULL(CAST(_col3_ AS varchar(60) ), 'Unknown') AS  ca_street_name ,\nISNULL(CAST(_col4_ AS char(16)), 'Unknown') AS   ca_street_type ,\nISNULL(CAST(_col5_ AS char(16)), 'Unknown') AS ca_suite_number  ,\nISNULL(CAST(_col6_ AS  varchar(60) ), 'Unknown') AS ca_city ,\nISNULL(CAST(_col7_ AS  varchar(60) ), 'Unknown') AS   ca_county     ,\nISNULL(CAST(_col8_ AS char(2) ), '') AS   ca_state     ,\nISNULL(CAST(_col9_ AS char(10) ), '') AS   ca_zip  ,\nISNULL(CAST(_col10_ AS varchar(60) ), 'Unknown') AS   ca_country  ,\nISNULL(CAST(_col11_ AS Decimal(7,2)), -1) AS ca_gmt_offset     ,\nISNULL(CAST(_col12_ AS char(30)), 'Unknown') AS ca_location_type \nFROM OPENROWSET\n(\n    BULK 'customer_address',\n    DATA_SOURCE = 'insiderrsc',\n    FORMAT = 'delta'\n) --as rows;\nWITH\n(\n\t[mycols] nvarchar(255),\n\t[_col0_] nvarchar(255),\n\t[_col1_] nvarchar(255),\n\t[_col2_] nvarchar(255),\n\t[_col3_] nvarchar(255),\n\t[_col4_] nvarchar(255),\n\t[_col5_] nvarchar(255),\n\t[_col6_] nvarchar(255),\n\t[_col7_] nvarchar(255),\n\t[_col8_] nvarchar(255),\n\t[_col9_] nvarchar(255),\n\t[_col10_] nvarchar(255),\n\t[_col11_] nvarchar(255),\n\t[_col12_] nvarchar(255),\n\t[_col13_] nvarchar(255),\n\t[filename] nvarchar(255)\n) AS rows;\ngo\nSELECT TOP 10000 * FROM customer_address;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "insider",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

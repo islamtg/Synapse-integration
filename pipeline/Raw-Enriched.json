@@ -1,0 +1,127 @@
+{
+	"name": "Raw-Enriched",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DestinationDataset_8qd",
+						"type": "DatasetReference",
+						"parameters": {
+							"containerName": {
+								"value": "@variables('containername')",
+								"type": "Expression"
+							}
+						}
+					},
+					"fieldList": [
+						"childItems",
+						"itemName"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "RawToEnriched",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "1.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataflow": {
+									"referenceName": "RawToEnrichedFlow",
+									"type": "DataFlowReference",
+									"parameters": {
+										"container": {
+											"value": "'@{variables('containername')}'",
+											"type": "Expression"
+										},
+										"folder": {
+											"value": "'@{item().name}'",
+											"type": "Expression"
+										},
+										"targetcontainer": {
+											"value": "'@{variables('targetcontainer')}'",
+											"type": "Expression"
+										}
+									}
+								},
+								"integrationRuntime": {
+									"referenceName": "IntegrationRuntime1",
+									"type": "IntegrationRuntimeReference"
+								},
+								"traceLevel": "None",
+								"runConcurrently": true,
+								"cacheSinks": {
+									"firstRowOnly": true
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"containername": {
+				"type": "String",
+				"defaultValue": "raw-data"
+			},
+			"foldername": {
+				"type": "String",
+				"defaultValue": "*"
+			},
+			"targetcontainer": {
+				"type": "String",
+				"defaultValue": "enriched-data"
+			}
+		},
+		"folder": {
+			"name": "Enrichment-data-pipeline"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-02-07T23:35:58Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

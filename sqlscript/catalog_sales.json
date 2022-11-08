@@ -1,0 +1,20 @@
+{
+	"name": "catalog_sales",
+	"properties": {
+		"folder": {
+			"name": "View_scripts"
+		},
+		"content": {
+			"query": "CREATE VIEW catalog_sales\nAS\nSELECT \nISNULL(CAST(_col0_ AS int), -1) AS cs_sold_date_sk,\nISNULL(CAST(_col1_ AS int), -1) AS cs_sold_time_sk,\nISNULL(CAST(_col2_ AS int), -1) AS cs_ship_date_sk,\nISNULL(CAST(_col3_ AS int), -1) AS cs_bill_customer_sk,\nISNULL(CAST(_col4_ AS int), -1) AS cs_bill_cdemo_sk,\nISNULL(CAST(_col5_ AS int), -1) AS cs_bill_hdemo_sk,\nISNULL(CAST(_col6_ AS int), -1) AS cs_bill_addr_sk,\nISNULL(CAST(_col7_ AS int), -1) AS cs_ship_customer_sk,\nISNULL(CAST(_col8_ AS int), -1) AS cs_ship_cdemo_sk,\nISNULL(CAST(_col9_ AS int), -1) AS cs_ship_hdemo_sk,\nISNULL(CAST(_col10_ AS int), -1) AS cs_ship_addr_sk,\nISNULL(CAST(_col11_ AS int), -1) AS cs_call_center_sk,\nISNULL(CAST(_col12_ AS int), -1) AS cs_catalog_page_sk,\nISNULL(CAST(_col13_ AS int), -1) AS cs_ship_mode_sk,\nISNULL(CAST(_col14_ AS int), -1) AS cs_warehouse_sk,\nISNULL(CAST(_col15_ AS int), -1) AS cs_item_sk,\nISNULL(CAST(_col16_ AS int), -1) AS cs_promo_sk,\nISNULL(CAST(_col17_ AS BIGINT), -1) AS cs_order_number,\nISNULL(CAST(_col18_ AS int), -1) AS cs_quantity,\nISNULL(CAST(_col19_ AS Decimal(7,2)), -1) AS cs_wholesale_cost,\nISNULL(CAST(_col20_ AS Decimal(7,2)), -1) AS cs_list_price,\nISNULL(CAST(_col21_ AS Decimal(7,2)), -1) AS cs_sales_price,\nISNULL(CAST(_col22_ AS Decimal(7,2)), -1) AS cs_ext_discount_amt,\nISNULL(CAST(_col23_ AS Decimal(7,2)), -1) AS cs_ext_sales_price,\nISNULL(CAST(_col24_ AS Decimal(7,2)), -1) AS cs_ext_wholesale_cost,\nISNULL(CAST(_col25_ AS Decimal(7,2)), -1) AS cs_ext_list_price,\nISNULL(CAST(_col26_ AS Decimal(7,2)), -1) AS cs_ext_tax,\nISNULL(CAST(_col27_ AS Decimal(7,2)), -1) AS cs_coupon_amt,\nISNULL(CAST(_col28_ AS Decimal(7,2)), -1) AS cs_ext_ship_cost,\nISNULL(CAST(_col29_ AS Decimal(7,2)), -1) AS cs_net_paid,\nISNULL(CAST(_col30_ AS Decimal(7,2)), -1) AS cs_net_paid_inc_tax,\nISNULL(CAST(_col31_ AS Decimal(7,2)), -1) AS cs_net_paid_inc_ship,\nISNULL(CAST(_col32_ AS Decimal(7,2)), -1) AS cs_net_paid_inc_ship_tax,\nISNULL(CAST(_col33_ AS Decimal(7,2)), -1) AS cs_net_profit\n\nFROM OPENROWSET\n(\n    BULK 'catalog_sales',\n    DATA_SOURCE = 'insiderrsc',\n    FORMAT = 'delta'\n) --as rows;\nWITH\n(\nmycol varchar(255),\n_col0_ varchar(50),\n_col1_ varchar(50),\n_col2_ varchar(50),\n_col3_ varchar(50),\n_col4_ varchar(50),\n_col5_ varchar(50),\n_col6_ varchar(50),\n_col7_ varchar(50),\n_col8_ varchar(50),\n_col9_ varchar(50),\n_col10_ varchar(50),\n_col11_ varchar(50),\n_col12_ varchar(50),\n_col13_ varchar(50),\n_col14_ varchar(50),\n_col15_ varchar(50),\n_col16_ varchar(50),\n_col17_ varchar(50), --Bigint\n_col18_ varchar(50),\n_col19_ varchar(50), --Decimal(7,2)\n_col20_ varchar(50), --Decimal(7,2)\n_col21_ varchar(50), --Decimal(7,2)\n_col22_ varchar(50), --Decimal(7,2)\n_col23_ varchar(50), --Decimal(7,2)\n_col24_ varchar(50), --Decimal(7,2)\n_col25_ varchar(50), --Decimal(7,2)\n_col26_ varchar(50), --Decimal(7,2)\n_col27_ varchar(50), --Decimal(7,2)\n_col28_ varchar(50), --Decimal(7,2)\n_col29_ varchar(50), --Decimal(7,2)\n_col30_ varchar(50), --Decimal(7,2)\n_col31_ varchar(50), --Decimal(7,2)\n_col32_ varchar(50), --Decimal(7,2)\n_col33_ varchar(50)\n) AS rows;\ngo\nSELECT TOP 10000 * FROM catalog_sales;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "insider",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

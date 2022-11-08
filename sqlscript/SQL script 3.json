@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 3",
+	"properties": {
+		"content": {
+			"query": "CREATE USER [iselghaz@microsoft.com] FROM EXTERNAL PROVIDER;\n\nCREATE SCHEMA [df];\n\n--Make sure your user has the permissions to CREATE tables in the [dbo] schema\nGRANT CREATE TABLE TO [iselghaz@microsoft.com];\nGRANT ALTER ON SCHEMA::[df] TO [iselghaz@microsoft.com];\n\n--Make sure your user has ADMINISTER DATABASE BULK OPERATIONS permissions\nGRANT ADMINISTER DATABASE BULK OPERATIONS TO [iselghaz@microsoft.com];\n\n--Make sure your user has INSERT permissions on the target table\nGRANT INSERT ON call_center_demo TO [iselghaz@microsoft.com]\n\nEXEC sp_addrolemember 'db_exporter', [iselghaz@microsoft.com];\n\nCREATE Table df.call_center_demo\n(\ncc_call_center_sk int,\ncc_call_center_id varchar(50),\ncc_rec_start_date date,\ncc_rec_end_date date,\ncc_closed_date_sk int,\ncc_open_date_sk int,\ncc_name varchar(50),\ncc_class varchar(50),\ncc_employees int,\ncc_sq_ft int,\ncc_hours varchar(50),\ncc_manager varchar(50),\ncc_mkt_id int,\ncc_mkt_class varchar(50),\ncc_mkt_desc varchar(50),\ncc_market_manager varchar(50),\ncc_division int,\ncc_division_name varchar(50),\ncc_company int,\ncc_company_name varchar(50),\ncc_street_number varchar(50),\ncc_street_name varchar(50),\ncc_street_type varchar(50),\ncc_suite_number varchar(50),\ncc_city varchar(50),\ncc_county varchar(50),\ncc_state varchar(50),\ncc_zip varchar(50),\ncc_country varchar(50),\ncc_gmt_offset Decimal(7,2),\ncc_tax_percentage Decimal(7,2)\n)\nWITH ( CLUSTERED COLUMNSTORE INDEX )\n;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sqld",
+				"poolName": "sqld"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

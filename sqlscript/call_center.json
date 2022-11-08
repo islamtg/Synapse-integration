@@ -1,0 +1,20 @@
+{
+	"name": "call_center",
+	"properties": {
+		"folder": {
+			"name": "View_scripts"
+		},
+		"content": {
+			"query": "CREATE VIEW call_center\nAS\nSELECT \nISNULL(CAST(_col0_ AS int), -1) AS cc_call_center_sk,\nISNULL(CAST(_col1_ AS char(16)), -1) AS cc_call_center_id,\nISNULL(CAST(_col2_ AS date), '') AS cc_rec_start_date,\nISNULL(CAST(_col3_ AS date), '') AS cc_rec_end_date,\nISNULL(CAST(_col4_ AS int), -1) AS cc_closed_date_sk,\nISNULL(CAST(_col5_ AS int), -1) AS cc_open_date_sk,\nISNULL(CAST(_col6_ AS  varchar(50) ), 'Unknown') AS cc_name,\nISNULL(CAST(_col7_ AS varchar(50) ), 'Unknown') AS cc_class,\nISNULL(CAST(_col8_ AS int), -1) AS cc_employees,\nISNULL(CAST(_col9_ AS int), -1) AS cc_sq_ft,\nISNULL(CAST(_col10_ AS char(20)), -1) AS cc_hours,\nISNULL(CAST(_col11_ AS varchar(50) ), 'Unknown') AS cc_manager,\nISNULL(CAST(_col12_ AS int), -1) AS cc_mkt_id,\nISNULL(CAST(_col13_ AS char(50)), 'Unknown') AS cc_mkt_class,\nISNULL(CAST(_col14_ AS varchar(50) ), 'Unknown') AS cc_mkt_desc,\nISNULL(CAST(_col15_ AS varchar(50) ), 'Unknown') AS cc_market_manager,\nISNULL(CAST(_col16_ AS int), -1) AS cc_division,\nISNULL(CAST(_col17_ AS varchar(50) ), 'Unknown') AS cc_division_name,\nISNULL(CAST(_col18_ AS int), -1) AS cc_company,\nISNULL(CAST(_col19_ AS varchar(50) ), 'Unknown') AS cc_company_name,\nISNULL(CAST(_col20_ AS  char(50)), 'Unknown') AS cc_street_number,\nISNULL(CAST(_col21_ AS varchar(50) ), 'Unknown') AS cc_street_name,\nISNULL(CAST(_col22_ AS char(50)), 'Unknown') AS cc_street_type,\nISNULL(CAST(_col23_ AS char(50)), 'Unknown') AS cc_suite_number,\nISNULL(CAST(_col24_ AS varchar(50) ), 'Unknown') AS cc_city,\nISNULL(CAST(_col25_ AS varchar(50) ), 'Unknown') AS cc_county,\nISNULL(CAST(_col26_ AS char(2)), 'NA') AS cc_state,\nISNULL(CAST(_col27_ AS char(10)), 'NA') AS cc_zip,\nISNULL(CAST(_col28_ AS varchar(50) ), 'Unknown') AS cc_country,\nISNULL(CAST(_col29_ AS Decimal(7,2)), -1) AS cc_gmt_offset,\nISNULL(CAST(_col30_ AS Decimal(7,2)), -1) AS cc_tax_percentage\nFROM OPENROWSET\n(\n    BULK 'call_center',\n    DATA_SOURCE = 'insiderrsc',\n    FORMAT = 'delta'\n) --as rows;\nWITH\n(\n[mycols] nvarchar(255),\n\t[_col0_] nvarchar(255),\n\t[_col1_] nvarchar(255),\n\t[_col2_] nvarchar(255),\n\t[_col3_] nvarchar(255),\n\t[_col4_] nvarchar(255),\n\t[_col5_] nvarchar(255),\n\t[_col6_] nvarchar(255),\n\t[_col7_] nvarchar(255),\n\t[_col8_] nvarchar(255),\n\t[_col9_] nvarchar(255),\n\t[_col10_] nvarchar(255),\n\t[_col11_] nvarchar(255),\n\t[_col12_] nvarchar(255),\n\t[_col13_] nvarchar(255),\n\t[_col14_] nvarchar(255),\n\t[_col15_] nvarchar(255),\n\t[_col16_] nvarchar(255),\n\t[_col17_] nvarchar(255),\n\t[_col18_] nvarchar(255),\n\t[_col19_] nvarchar(255),\n\t[_col20_] nvarchar(255),\n\t[_col21_] nvarchar(255),\n\t[_col22_] nvarchar(255),\n\t[_col23_] nvarchar(255),\n\t[_col24_] nvarchar(255),\n\t[_col25_] nvarchar(255),\n\t[_col26_] nvarchar(255),\n\t[_col27_] nvarchar(255),\n\t[_col28_] nvarchar(255),\n\t[_col29_] nvarchar(255),\n\t[_col30_] nvarchar(255),\n\t[_col31_] nvarchar(255),\n\t[filename] nvarchar(255)\n) AS rows;\ngo\nSELECT TOP 10000 * FROM call_center;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "insider",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

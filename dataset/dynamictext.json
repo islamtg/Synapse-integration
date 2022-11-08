@@ -1,0 +1,44 @@
+{
+	"name": "dynamictext",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ie-synapse-insider-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"storagecontainer": {
+				"type": "string"
+			},
+			"filepathname": {
+				"type": "string"
+			},
+			"datasetname": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().datasetname",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().filepathname",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().storagecontainer",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

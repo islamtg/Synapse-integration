@@ -1,0 +1,249 @@
+{
+	"name": "Notebook 4",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "spark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "112g",
+			"driverCores": 16,
+			"executorMemory": "112g",
+			"executorCores": 16,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "e8551e9e-b9ea-44d2-93ad-6f0b0fad4b91"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "scala"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/3c84e5c6-c8ce-4f99-b67c-b39db1a54086/resourceGroups/iselghaz-insider-synapse/providers/Microsoft.Synapse/workspaces/ie-synapse-insider/bigDataPools/spark",
+				"name": "spark",
+				"type": "Spark",
+				"endpoint": "https://ie-synapse-insider.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/spark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 10,
+				"cores": 16,
+				"memory": 112,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"# Add required imports\r\n",
+					"import com.microsoft.spark.sqlanalytics\r\n",
+					"from com.microsoft.spark.sqlanalytics.Constants import Constants\r\n",
+					"from pyspark.sql.functions import col\r\n",
+					"\r\n",
+					"# Read from existing internal table\r\n",
+					"dfToReadFromTable = (spark.read\r\n",
+					"                     # If `Constants.SERVER` is not provided, the `<database_name>` from the three-part table name argument\r\n",
+					"                     # to `synapsesql` method is used to infer the Synapse Dedicated SQL End Point.\r\n",
+					"                     .option(Constants.SERVER, \"ie-synapse-insider.sql.azuresynapse.net\")\r\n",
+					"                     # Set database user name\r\n",
+					"                     #.option(Constants.USER, \"iselghaz-synapse-spn\")\r\n",
+					"                     # Set user's password to the database\r\n",
+					"                     #.option(Constants.PASSWORD, \"M2V8Q~_6VKOWZQrZNPne5oxWANNU1FBYB.3wwaFL\")\r\n",
+					"                     # Set name of the data source definition that is defined with database scoped credentials.\r\n",
+					"                     # https://docs.microsoft.com/sql/t-sql/statements/create-external-data-source-transact-sql?view=sql-server-ver15&tabs=dedicated#h-create-external-data-source-to-access-data-in-azure-storage-using-the-abfs-interface\r\n",
+					"                     # Data extracted from the SQL query will be staged to the storage path defined on the data source's location setting.\r\n",
+					"                     #.option(Constants.DATA_SOURCE, \"<data_source_name>\")\r\n",
+					"                     # Three-part table name from where data will be read.\r\n",
+					"                     .synapsesql(\"[sqld].[df].[call_center_demo]\")\r\n",
+					"                     # Column-pruning i.e., query select column values.\r\n",
+					"                     .select(\"[cc_call_center_sk]\")\r\n",
+					"                     # Push-down filter criteria that gets translated to SQL Push-down Predicates.\r\n",
+					"                     #.filter(col(\"Title\").contains(\"E\"))\r\n",
+					"                     # Fetch a sample of 10 records\r\n",
+					"                     .limit(10))\r\n",
+					"\r\n",
+					"# Show contents of the dataframe\r\n",
+					"dfToReadFromTable.show()"
+				],
+				"execution_count": 15
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"# Add required imports\r\n",
+					"import com.microsoft.spark.sqlanalytics\r\n",
+					"from com.microsoft.spark.sqlanalytics.Constants import Constants\r\n",
+					"from pyspark.sql.functions import col\r\n",
+					"\r\n",
+					"# Read from existing internal table\r\n",
+					"dfToReadFromTable = (spark.read\r\n",
+					"                     # If `Constants.SERVER` is not provided, the `<database_name>` from the three-part table name argument\r\n",
+					"                     # to `synapsesql` method is used to infer the Synapse Dedicated SQL End Point.\r\n",
+					"                     .option(Constants.SERVER, \"ie-synapse-insider.sql.azuresynapse.net\")\r\n",
+					"                     # Defaults to storage path defined in the runtime configurations \r\n",
+					"                     .option(Constants.TEMP_FOLDER, \"abfss://curated-data@ie-synapse-insider.dfs.core.windows.net/staging\")\r\n",
+					"                     # Three-part table name from where data will be read.\r\n",
+					"                     .synapsesql(\"[sqld].[df].[call_center_demo]\")\r\n",
+					"                     # Column-pruning i.e., query select column values.\r\n",
+					"                     .select(\"[cc_call_center_sk]\")\r\n",
+					"                     # Push-down filter criteria that gets translated to SQL Push-down Predicates.\r\n",
+					"                     #.filter(col(\"Title\").contains(\"E\"))\r\n",
+					"                     # Fetch a sample of 10 records\r\n",
+					"                     .limit(10))\r\n",
+					"\r\n",
+					"# Show contents of the dataframe\r\n",
+					"dfToReadFromTable.show()"
+				],
+				"execution_count": 18
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df = spark.read.csv('abfss://curated-data@ie-synapse-insider.dfs.core.windows.net/staging')\r\n",
+					"display(df.limit(10))"
+				],
+				"execution_count": 19
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"TokenLibrary.help()"
+				],
+				"execution_count": 20
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"//Use case is to read data from an internal table in Synapse Dedicated SQL Pool DB\r\n",
+					"//Azure Active Directory based authentication approach is preferred here.\r\n",
+					"import org.apache.spark.sql.DataFrame\r\n",
+					"import com.microsoft.spark.sqlanalytics.utils.Constants\r\n",
+					"import org.apache.spark.sql.SqlAnalyticsConnector._\r\n",
+					"\r\n",
+					"//Read from existing internal table\r\n",
+					"val dfToReadFromTable:DataFrame = spark.read.\r\n",
+					"    //If `Constants.SERVER` is not provided, the `<database_name>` from the three-part table name argument \r\n",
+					"    //to `synapsesql` method is used to infer the Synapse Dedicated SQL End Point.\r\n",
+					"    option(Constants.SERVER, \"ie-synapse-insider.sql.azuresynapse.net\").\r\n",
+					"    //Defaults to storage path defined in the runtime configurations\r\n",
+					"    //option(Constants.TEMP_FOLDER, \"abfss://curated-data@ie-synapse-insider.dfs.core.windows.net/staging\").\r\n",
+					"    //Three-part table name from where data will be read.\r\n",
+					"    synapsesql(\"[sqld].[df].[call_center_demo]\").\r\n",
+					"    //Column-pruning i.e., query select column values.\r\n",
+					"    select(\"[cc_call_center_sk]\"). \r\n",
+					"    //Push-down filter criteria that gets translated to SQL Push-down Predicates.    \r\n",
+					"    filter(col(\"Title\").startsWith(\"E\")).\r\n",
+					"    //Fetch a sample of 10 records \r\n",
+					"    limit(10)\r\n",
+					"\r\n",
+					"//Show contents of the dataframe\r\n",
+					"dfToReadFromTable.show()"
+				],
+				"execution_count": 5
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"//Specify options that Spark runtime must support when interfacing and consuming source data\r\n",
+					"val storageAccountName=\"ie-synapse-insider\"\r\n",
+					"val storageContainerName=\"curated-data\"\r\n",
+					"val subscriptionId=\"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n",
+					"val spnClientId=\"51e74d19-a92f-48cd-bc47-55dae310c18f\"\r\n",
+					"val spnSecretKeyUsedAsAuthCred=\"M2V8Q~_6VKOWZQrZNPne5oxWANNU1FBYB.3wwaFL\"\r\n",
+					"val dfReadOptions:Map[String, String]=Map(\"header\"->\"true\",\r\n",
+					"                               \"delimiter\"->\",\", \r\n",
+					"                               \"fs.defaultFS\" -> s\"abfss://$storageContainerName@$storageAccountName.dfs.core.windows.net\",\r\n",
+					"                               s\"fs.azure.account.auth.type.$storageAccountName.dfs.core.windows.net\" -> \"OAuth\",\r\n",
+					"                               s\"fs.azure.account.oauth.provider.type.$storageAccountName.dfs.core.windows.net\" -> \r\n",
+					"                                   \"org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider\",\r\n",
+					"                               \"fs.azure.account.oauth2.client.id\" -> s\"$spnClientId\",\r\n",
+					"                               \"fs.azure.account.oauth2.client.secret\" -> s\"$spnSecretKeyUsedAsAuthCred\",\r\n",
+					"                               \"fs.azure.account.oauth2.client.endpoint\" -> s\"https://login.microsoftonline.com/$subscriptionId/oauth2/token\",\r\n",
+					"                               \"fs.AbstractFileSystem.abfss.impl\" -> \"org.apache.hadoop.fs.azurebfs.Abfs\",\r\n",
+					"                               \"fs.abfss.impl\" -> \"org.apache.hadoop.fs.azurebfs.SecureAzureBlobFileSystem\")\r\n",
+					"//Initialize the Storage Path string, where source data is maintained/kept.\r\n",
+					"val pathToInputSource=s\"abfss://$storageContainerName@$storageAccountName.dfs.core.windows.net/staging\"\r\n",
+					"//Define data frame to interface with the data source\r\n",
+					"val df:DataFrame = spark.read.options(dfReadOptions).csv(pathToInputSource).limit(100)"
+				],
+				"execution_count": 4
+			}
+		]
+	}
+}

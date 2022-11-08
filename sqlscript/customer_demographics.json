@@ -1,0 +1,20 @@
+{
+	"name": "customer_demographics",
+	"properties": {
+		"folder": {
+			"name": "View_scripts"
+		},
+		"content": {
+			"query": "CREATE VIEW customer_demographics\nAS\nSELECT \nISNULL(CAST(_col0_ AS int), -1) AS cd_demo_sk   ,\nISNULL(CAST(_col1_ AS char(3)), 'NA') AS cd_gender    ,\nISNULL(CAST(_col2_ AS char(3)), 'NA') AS    cd_marital_status ,\nISNULL(CAST(_col3_ AS char(20)), 'NA') AS cd_education_status  ,\nISNULL(CAST(_col4_ AS int), -1) AS cd_purchase_estimate  ,\nISNULL(CAST(_col5_ AS char(10)), 'NA') AS  cd_credit_rating     ,\nISNULL(CAST(_col6_ AS  int), -1) AS cd_dep_count     ,\nISNULL(CAST(_col7_ AS  int), -1) AS cd_dep_employed_count    ,\nISNULL(CAST(_col8_ AS int), -1) AS    cd_dep_college_count\nFROM OPENROWSET\n(\n    BULK 'customer_demographics',\n    DATA_SOURCE = 'insiderrsc',\n    FORMAT = 'delta'\n) --as rows;\nWITH\n(\n[mycols] nvarchar(255),\n\t[_col0_] nvarchar(255),\n\t[_col1_] nvarchar(255),\n\t[_col2_] nvarchar(255),\n\t[_col3_] nvarchar(255),\n\t[_col4_] nvarchar(255),\n\t[_col5_] nvarchar(255),\n\t[_col6_] nvarchar(255),\n\t[_col7_] nvarchar(255),\n\t[_col8_] nvarchar(255),\n\t[_col9_] nvarchar(255),\n\t[filename] nvarchar(255)\n) AS rows;\ngo\nSELECT TOP 10000 * FROM customer_demographics;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "insider",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

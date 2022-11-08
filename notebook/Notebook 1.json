@@ -1,0 +1,660 @@
+{
+	"name": "Notebook 1",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "spark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "74fd9bc5-de0a-427d-ad04-f24d6efd1e79"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1",
+				"state": {
+					"09fde1bf-d870-40c0-a7cb-2f44174cbd9f": {
+						"type": "Synapse.DataFrame",
+						"sync_state": {
+							"table": {
+								"rows": [
+									{
+										"0": "a2ada6be2e34b855e18cd6dbfdbb30e8f87c28a24972e5d6172908f58cac2edc",
+										"1": "5",
+										"2": "AAAAAAAAEAAAAAAA",
+										"3": "2000-01-02",
+										"4": "2001-12-31",
+										"6": "2451063",
+										"7": "North Midwest",
+										"8": "small",
+										"9": "34898",
+										"10": "9247970",
+										"11": "8AM-8AM",
+										"12": "Larry Mccray",
+										"13": "2",
+										"14": "Dealers make most historical, direct students",
+										"15": "Blue, due beds come. Politicians would not make far thoughts. Specifically new horses partic",
+										"16": "Gary Colburn",
+										"17": "4",
+										"18": "ese",
+										"19": "3",
+										"20": "pri",
+										"21": "463",
+										"22": "Pine Ridge",
+										"23": "RD",
+										"24": "Suite U",
+										"25": "Pleasant Hill",
+										"26": "Barrow County",
+										"27": "GA",
+										"28": "33604",
+										"29": "United States",
+										"30": "-5",
+										"31": "0.12"
+									},
+									{
+										"0": "1803deb1da44c6033859a376016227e22452f9851b55ed1badf63987312aa5b4",
+										"1": "20",
+										"2": "AAAAAAAAEBAAAAAA",
+										"3": "1998-01-01",
+										"4": "2000-12-31",
+										"6": "2451128",
+										"7": "California_1",
+										"8": "medium",
+										"9": "48033",
+										"10": "19309266",
+										"11": "8AM-4PM",
+										"12": "Jason Brito",
+										"13": "2",
+										"14": "Efficient edges conclude slowly in a machines. Exp",
+										"15": "Common sons occur enough. Sometimes scottish preferences may let usually other details",
+										"16": "Earl Wolf",
+										"17": "1",
+										"18": "ought",
+										"19": "4",
+										"20": "ese",
+										"21": "759",
+										"22": "Sycamore ",
+										"23": "Ct.",
+										"24": "Suite 310",
+										"25": "Riverside",
+										"26": "Barrow County",
+										"27": "GA",
+										"28": "39231",
+										"29": "United States",
+										"30": "-5",
+										"31": "0.11"
+									},
+									{
+										"0": "90a9d09c381e75d0cd8a39a21cb2ad4f032b1ab712c94be629a597f06e8fe1d4",
+										"1": "11",
+										"2": "AAAAAAAAKAAAAAAA",
+										"3": "2000-01-02",
+										"4": "2001-12-31",
+										"6": "2451050",
+										"7": "Hawaii/Alaska",
+										"8": "small",
+										"9": "17687",
+										"10": "9055744",
+										"11": "8AM-4PM",
+										"12": "Gregory Altman",
+										"13": "2",
+										"14": "Citizens change. Paintings translate",
+										"15": "As existing eyebrows miss as the matters. Realistic stories may not face almost by a ",
+										"16": "James Mcdonald",
+										"17": "6",
+										"18": "pri",
+										"19": "3",
+										"20": "pri",
+										"21": "457",
+										"22": "1st ",
+										"23": "Boulevard",
+										"24": "Suite B",
+										"25": "Pleasant Valley",
+										"26": "Luce County",
+										"27": "MI",
+										"28": "42477",
+										"29": "United States",
+										"30": "-5",
+										"31": "0.01"
+									},
+									{
+										"0": "4d57b66282ed6408246c9d0e07030ccc161b4933eaf78eda41f3b4286efd617b",
+										"1": "14",
+										"2": "AAAAAAAAOAAAAAAA",
+										"3": "1998-01-01",
+										"4": "2000-12-31",
+										"6": "2451079",
+										"7": "Mid Atlantic_1",
+										"8": "large",
+										"9": "9026",
+										"10": "3095918",
+										"11": "8AM-8AM",
+										"12": "Clyde Scott",
+										"13": "5",
+										"14": "National, willing constraints s",
+										"15": "Eyes would not arise; terms shall not visit in the cells. Less ethnic cities commi",
+										"16": "Ronald Somerville",
+										"17": "6",
+										"18": "cally",
+										"19": "1",
+										"20": "ought",
+										"21": "406",
+										"22": "Main ",
+										"23": "Avenue",
+										"24": "Suite 410",
+										"25": "Centerville",
+										"26": "Fairfield County",
+										"27": "SC",
+										"28": "20059",
+										"29": "United States",
+										"30": "-5",
+										"31": "0.08"
+									},
+									{
+										"0": "279f0f4b1c04aa5dd8c4ddab71354f00b0197f6e1638829613fe68710dbcb281",
+										"1": "12",
+										"2": "AAAAAAAAKAAAAAAA",
+										"3": "2002-01-01",
+										"6": "2451050",
+										"7": "Hawaii/Alaska",
+										"8": "large",
+										"9": "55979",
+										"10": "19088839",
+										"11": "8AM-4PM",
+										"12": "Ronnie Trinidad",
+										"13": "3",
+										"14": "Citizens change. Paintings translate",
+										"15": "Pretty new degrees could open perhaps personal final poles; marine, annual minutes imply reco",
+										"16": "Mark Camp",
+										"17": "5",
+										"18": "anti",
+										"19": "3",
+										"20": "pri",
+										"21": "457",
+										"22": "1st ",
+										"23": "Boulevard",
+										"24": "Suite B",
+										"25": "Pleasant Valley",
+										"26": "Luce County",
+										"27": "MI",
+										"28": "42477",
+										"29": "United States",
+										"30": "-5",
+										"31": "0.06"
+									},
+									{
+										"0": "ebb9590ee297af3921553b251fadb8fa5d7a4b7e9d5cddf58b11b2cb8a241dea",
+										"1": "10",
+										"2": "AAAAAAAAKAAAAAAA",
+										"3": "1998-01-01",
+										"4": "2000-01-01",
+										"6": "2451050",
+										"7": "Hawaii/Alaska",
+										"8": "large",
+										"9": "17687",
+										"10": "9055744",
+										"11": "8AM-8AM",
+										"12": "Gregory Altman",
+										"13": "2",
+										"14": "Just back responses ought ",
+										"15": "As existing eyebrows miss as the matters. Realistic stories may not face almost by a ",
+										"16": "James Mcdonald",
+										"17": "3",
+										"18": "pri",
+										"19": "3",
+										"20": "pri",
+										"21": "457",
+										"22": "1st ",
+										"23": "Boulevard",
+										"24": "Suite B",
+										"25": "Pleasant Valley",
+										"26": "Luce County",
+										"27": "MI",
+										"28": "42477",
+										"29": "United States",
+										"30": "-5",
+										"31": "0.02"
+									},
+									{
+										"0": "eaea4bc7d5c587acba44b3e344087c93462700b6326e5cd7153065703c2f462d",
+										"1": "2",
+										"2": "AAAAAAAACAAAAAAA",
+										"3": "1998-01-01",
+										"4": "2000-12-31",
+										"6": "2450806",
+										"7": "Mid Atlantic",
+										"8": "medium",
+										"9": "19074",
+										"10": "7209972",
+										"11": "8AM-8AM",
+										"12": "Felipe Perkins",
+										"13": "2",
+										"14": "A bit narrow forms matter animals. Consist",
+										"15": "Largely blank years put substantially deaf, new others. Question",
+										"16": "Julius Durham",
+										"17": "5",
+										"18": "anti",
+										"19": "1",
+										"20": "ought",
+										"21": "984",
+										"22": "Center Hill",
+										"23": "Way",
+										"24": "Suite 70",
+										"25": "Liberty",
+										"26": "Williamson County",
+										"27": "TN",
+										"28": "33451",
+										"29": "United States",
+										"30": "-5",
+										"31": "0.12"
+									},
+									{
+										"0": "6ac011b6b22544b883248bcc3364035f71b4077909764534a89e28f856dcb097",
+										"1": "29",
+										"2": "AAAAAAAAMBAAAAAA",
+										"3": "2000-01-02",
+										"4": "2001-12-31",
+										"6": "2451102",
+										"7": "North Midwest_2",
+										"8": "medium",
+										"9": "41932",
+										"10": "27213868",
+										"11": "8AM-12AM",
+										"12": "David Brown",
+										"13": "1",
+										"14": "Yesterday new men can make moreov",
+										"15": "More original ships ",
+										"16": "Luis Gault",
+										"17": "3",
+										"18": "able",
+										"19": "5",
+										"20": "ese",
+										"21": "609",
+										"22": "Smith ",
+										"23": "Street",
+										"24": "Suite 140",
+										"25": "Midway",
+										"26": "Barrow County",
+										"27": "GA",
+										"28": "31904",
+										"29": "United States",
+										"30": "-5",
+										"31": "0.11"
+									},
+									{
+										"0": "90348ac2bba7bc67c1e171036a2277c1b072521c91754f08e7d1f6b92c9c2f71",
+										"1": "24",
+										"2": "AAAAAAAAGBAAAAAA",
+										"3": "2002-01-01",
+										"6": "2451077",
+										"7": "Hawaii/Alaska_1",
+										"8": "medium",
+										"9": "38877",
+										"10": "17261388",
+										"11": "8AM-4PM",
+										"12": "Travis Wilson",
+										"13": "6",
+										"14": "Civil tories allow late",
+										"15": "Furthermore various areas shall not gr",
+										"16": "Kevin Damico",
+										"17": "2",
+										"18": "able",
+										"19": "3",
+										"20": "pri",
+										"21": "611",
+										"22": "Center ",
+										"23": "Pkwy",
+										"24": "Suite W",
+										"25": "Bethel",
+										"26": "Walker County",
+										"27": "AL",
+										"28": "35281",
+										"29": "United States",
+										"30": "-6",
+										"31": "0.00"
+									},
+									{
+										"0": "25ff78825cd48e09c48116d02ea915bd0d410a5fbcf1053a55cb0e7bb700d6f8",
+										"1": "25",
+										"2": "AAAAAAAAJBAAAAAA",
+										"3": "1998-01-01",
+										"6": "2450794",
+										"7": "NY Metro_2",
+										"8": "large",
+										"9": "19270",
+										"10": "9846970",
+										"11": "8AM-4PM",
+										"12": "Richard James",
+										"13": "4",
+										"14": "Sometimes complex thanks shall use. N",
+										"15": "Big spaces watch thus;",
+										"16": "John Melendez",
+										"17": "1",
+										"18": "ought",
+										"19": "5",
+										"20": "anti",
+										"21": "954",
+										"22": "Hill ",
+										"23": "Ct.",
+										"24": "Suite 240",
+										"25": "Bethel",
+										"26": "Franklin Parish",
+										"27": "LA",
+										"28": "75281",
+										"29": "United States",
+										"30": "-6",
+										"31": "0.08"
+									}
+								],
+								"schema": [
+									{
+										"key": "0",
+										"name": "mycols",
+										"type": "string"
+									},
+									{
+										"key": "1",
+										"name": "_col0_",
+										"type": "string"
+									},
+									{
+										"key": "2",
+										"name": "_col1_",
+										"type": "string"
+									},
+									{
+										"key": "3",
+										"name": "_col2_",
+										"type": "string"
+									},
+									{
+										"key": "4",
+										"name": "_col3_",
+										"type": "string"
+									},
+									{
+										"key": "5",
+										"name": "_col4_",
+										"type": "string"
+									},
+									{
+										"key": "6",
+										"name": "_col5_",
+										"type": "string"
+									},
+									{
+										"key": "7",
+										"name": "_col6_",
+										"type": "string"
+									},
+									{
+										"key": "8",
+										"name": "_col7_",
+										"type": "string"
+									},
+									{
+										"key": "9",
+										"name": "_col8_",
+										"type": "string"
+									},
+									{
+										"key": "10",
+										"name": "_col9_",
+										"type": "string"
+									},
+									{
+										"key": "11",
+										"name": "_col10_",
+										"type": "string"
+									},
+									{
+										"key": "12",
+										"name": "_col11_",
+										"type": "string"
+									},
+									{
+										"key": "13",
+										"name": "_col12_",
+										"type": "string"
+									},
+									{
+										"key": "14",
+										"name": "_col13_",
+										"type": "string"
+									},
+									{
+										"key": "15",
+										"name": "_col14_",
+										"type": "string"
+									},
+									{
+										"key": "16",
+										"name": "_col15_",
+										"type": "string"
+									},
+									{
+										"key": "17",
+										"name": "_col16_",
+										"type": "string"
+									},
+									{
+										"key": "18",
+										"name": "_col17_",
+										"type": "string"
+									},
+									{
+										"key": "19",
+										"name": "_col18_",
+										"type": "string"
+									},
+									{
+										"key": "20",
+										"name": "_col19_",
+										"type": "string"
+									},
+									{
+										"key": "21",
+										"name": "_col20_",
+										"type": "string"
+									},
+									{
+										"key": "22",
+										"name": "_col21_",
+										"type": "string"
+									},
+									{
+										"key": "23",
+										"name": "_col22_",
+										"type": "string"
+									},
+									{
+										"key": "24",
+										"name": "_col23_",
+										"type": "string"
+									},
+									{
+										"key": "25",
+										"name": "_col24_",
+										"type": "string"
+									},
+									{
+										"key": "26",
+										"name": "_col25_",
+										"type": "string"
+									},
+									{
+										"key": "27",
+										"name": "_col26_",
+										"type": "string"
+									},
+									{
+										"key": "28",
+										"name": "_col27_",
+										"type": "string"
+									},
+									{
+										"key": "29",
+										"name": "_col28_",
+										"type": "string"
+									},
+									{
+										"key": "30",
+										"name": "_col29_",
+										"type": "string"
+									},
+									{
+										"key": "31",
+										"name": "_col30_",
+										"type": "string"
+									},
+									{
+										"key": "32",
+										"name": "_col31_",
+										"type": "string"
+									}
+								],
+								"truncated": false
+							},
+							"isSummary": false,
+							"language": "scala"
+						},
+						"persist_state": {
+							"view": {
+								"type": "details",
+								"chartOptions": {
+									"chartType": "bar",
+									"aggregationType": "count",
+									"categoryFieldKeys": [
+										"0"
+									],
+									"seriesFieldKeys": [
+										"0"
+									],
+									"isStacked": false
+								}
+							}
+						}
+					}
+				}
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/3c84e5c6-c8ce-4f99-b67c-b39db1a54086/resourceGroups/iselghaz-insider-synapse/providers/Microsoft.Synapse/workspaces/ie-synapse-insider/bigDataPools/spark",
+				"name": "spark",
+				"type": "Spark",
+				"endpoint": "https://ie-synapse-insider.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/spark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 10,
+				"cores": 16,
+				"memory": 112,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"%%pyspark\r\n",
+					"df = spark.read.load('abfss://enriched-data@ieinsider.dfs.core.windows.net/call_center/call_center_1_24_2022-02-03.parquet', format='parquet')\r\n",
+					"display(df.limit(10))"
+				],
+				"execution_count": 2
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df.printSchema()"
+				],
+				"execution_count": 3
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "scala"
+					}
+				},
+				"source": [
+					"%%spark\r\n",
+					"\r\n",
+					"import org.apache.spark.sql.DataFrame\r\n",
+					"import com.microsoft.spark.sqlanalytics.utils.Constants\r\n",
+					"import org.apache.spark.sql.SqlAnalyticsConnector._\r\n",
+					"//Code for either writing or reading from Azure Synapse Dedicated SQL Pool (similar to afore-mentioned code templates)"
+				],
+				"execution_count": 4
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df.write.\r\n",
+					"  option(Constants.SERVER, \"ie-synapse-insider.sql.azuresynapse.net\"). //required; can be fetched from Portal – Azure synapse workspace Overview pane - Dedicated SQL endpoint config.\r\n",
+					"  option(Constants.TEMP_FOLDER, \"abfss://enriched-data@ieinsider.dfs.core.windows.net/call_center/call_center_1_24_2022-02-03.parquet\"). //Defaults to workspace attached primary storage.\r\n",
+					"  mode(SaveMode.Overwrite). //Defaults to ErrorIfExists SaveMode option.\r\n",
+					"  synapsesql(\"sqld.df.call_center_demo\", Constants.INTERNAL, None, Option(callBackHandle))"
+				],
+				"execution_count": 9
+			}
+		]
+	}
+}

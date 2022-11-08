@@ -1,0 +1,65 @@
+{
+	"name": "Dedup-nuls",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "ie-synapse-insider-WorkspaceDefaultStorage",
+						"type": "LinkedServiceReference"
+					},
+					"name": "RawDatafile"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "EnrichedParquet",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DistinctRows"
+				},
+				{
+					"name": "LookForNULLs"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     parameter1 as string (toString('raw-data')),",
+				"     parameter2 as string (toString('*')),",
+				"     parameter3 as string (toString('*'))",
+				"}",
+				"source(useSchema: false,",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'delimited',",
+				"     fileSystem: ($parameter1),",
+				"     columnDelimiter: '|',",
+				"     escapeChar: '\\\\',",
+				"     quoteChar: '\\\"',",
+				"     columnNamesAsHeader: false,",
+				"     wildcardPaths:['*']) ~> RawDatafile",
+				"RawDatafile aggregate(groupBy(AggregatedColumn = sha2(256,columns())),",
+				"     each(match(true()), $$ = first($$))) ~> DistinctRows",
+				"DistinctRows split(contains(array(toString(columns())),isNull(#item)),",
+				"     disjoint: false) ~> LookForNULLs@(hasNULLs, noNULLs)",
+				"LookForNULLs@noNULLs sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1) ~> sink1"
+			]
+		}
+	}
+}
